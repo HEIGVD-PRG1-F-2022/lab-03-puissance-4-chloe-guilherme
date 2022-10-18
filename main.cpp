@@ -26,19 +26,34 @@ void afficherTableau(const vector<vector<int>>&tableau){
     }
 }
 
-vector<vector<int>>jouer(vector<vector<int>>tableau, const int JOUEUR, int ligne, int colonne){
-    tableau.at(ligne).at(colonne) = JOUEUR;
-    return tableau;
+vector<vector<int>> jouer(vector<vector<int>> &tableau, const int JOUEUR,
+                          int colonne, const int TAILLE_LIGNE, const int
+                          TAILLE_COLONNE) {
+   int ligne;
+   for (ligne = TAILLE_LIGNE; ligne > 0;) {
+      if(tableau.at(ligne).at(colonne) == 0){
+         tableau.at(ligne).at(colonne) = JOUEUR;
+      } else{
+         ligne--;
+      }
+   }
+   //tableau.at(ligne).at(colonne) = JOUEUR;
+   return tableau;
 }
 
 
 
 int main() {
 
-    vector<vector<int>>tableau(6, vector<int>(7, 0));
-    afficherTableau(tableau);
 
+   //cin >>
+   const int JOUEUR1 = 1, JOUEUR2 = 2, TAILLE_LIGNE = 6, TAILLE_COLONNE = 7;
+   int ligne = 2, colonne = 5;
+   //vector<vector<int>> tableau(6, vector<int>(7, 0));
 
+   vector<vector<int>> tableau(TAILLE_LIGNE, vector<int>(TAILLE_COLONNE, 0));
+   jouer(tableau, JOUEUR1, ligne, colonne);
+   afficherTableau(tableau);
 
-    return EXIT_SUCCESS;
+   return EXIT_SUCCESS;
 }
