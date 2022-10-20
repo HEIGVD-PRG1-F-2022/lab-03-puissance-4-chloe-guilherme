@@ -44,17 +44,102 @@ vector<vector<int>> jouer(vector<vector<int>> &tableau,int joueur, int &ligne,
 }
 
 
-bool verficationHorizental(){
+bool verfication(vector<vector<int>> tableau, int ligne, int colonne) {
 
-}
+   // Verification Horizontal
+   const int TAILLE_COLONNE = (int) tableau.at(0).size();
+   int compteurVictoire = 0;
 
-bool verficationVertical(){
+   int decalageGauche = colonne > 3 ? 3 : colonne;
+   int debutColonne = colonne - decalageGauche;
 
-}
+   int decalageDroite = TAILLE_COLONNE - colonne > 3 ? 3 :
+                        TAILLE_COLONNE - 1 - colonne;
+   int finColonne = colonne + decalageDroite;
+   for (int col = debutColonne; col <= finColonne; ++col) {
+      if (tableau.at(ligne).at(colonne) ==
+          tableau.at(ligne).at(col)) {
+         compteurVictoire++;
+         if (compteurVictoire > 3) {
+            return true;
+         }
+      } else {
+         compteurVictoire = 0;
+      }
+   }
 
+   // Verification vertical
+   const int TAILLE_LIGNE = (int) tableau.size();
 
-bool verficationDiagonale(){
+   int decalageHaut = ligne > 3 ? 3 : ligne;
+   int debutLigne = ligne - decalageHaut;
 
+   int decalageBas = TAILLE_LIGNE - ligne > 3 ? 3 :
+                     TAILLE_LIGNE - 1 - ligne;
+   int finLigne = ligne + decalageBas;
+   for (int l = debutLigne; l <= finLigne; ++l) {
+      if (tableau.at(ligne).at(colonne) ==
+          tableau.at(l).at(colonne)) {
+         compteurVictoire++;
+         if (compteurVictoire > 3) {
+            return true;
+         }
+      } else {
+         compteurVictoire = 0;
+      }
+   }
+   
+   // Verification diagonale droite
+   if (decalageBas < decalageGauche) {
+      decalageGauche = decalageBas;
+   } else {
+      decalageBas = decalageGauche;
+   }
+   if (decalageHaut < decalageDroite) {
+      decalageDroite = decalageHaut;
+   } else {
+      decalageHaut = decalageDroite;
+   }
+   for (int l = finLigne; l >= debutLigne; ++debutColonne, --l) {
+      for (int col = debutColonne; col <= finColonne && col < debutColonne + 1;
+           ++col) {
+         if (tableau.at(ligne).at(colonne) ==
+             tableau.at(l).at(col)) {
+            compteurVictoire++;
+            if (compteurVictoire > 3) {
+               return true;
+            }
+         } else {
+            compteurVictoire = 0;
+         }
+      }
+   }
+
+   // Verifier Diagonale gauche "\"
+   if(decalageBas < decalageDroite){
+      decalageDroite = decalageBas;
+   }else{
+      decalageBas = decalageGauche;
+   }
+   if(decalageHaut < decalageGauche){
+      decalageGauche = decalageHaut;
+   }else{
+      decalageHaut = decalageGauche;
+   }
+   for (int l = debutLigne; l <= finLigne; ++debutColonne, ++l) {
+      for (int col = debutColonne; col <= finColonne && col < debutColonne + 1;
+           ++col) {
+         if (tableau.at(ligne).at(colonne) ==
+             tableau.at(l).at(col)) {
+            compteurVictoire++;
+            if (compteurVictoire > 3) {
+               return true;
+            }
+         } else {
+            compteurVictoire = 0;
+         }
+      }
+   }
 }
 
 bool joueurAGagne(const vector<vector<int>> &tableau, int ligne, int colonne, int nombreCoup , bool erreur,int joueur){
@@ -62,7 +147,7 @@ bool joueurAGagne(const vector<vector<int>> &tableau, int ligne, int colonne, in
         return false;
     } else {
         if (nombreCoup  >= 7){
-            if (verficationHorizental() == true|| verficationVertical() == true || verficationDiagonale() == true){
+            if (verfication(tableau, ligne, colonne) == true){
                 return true;
             }
         } else {
