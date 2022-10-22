@@ -4,9 +4,9 @@ Nom du fichier  : Puissance4.cpp
 Auteur(s)       : Chloé Salamin, Guilherme Pinto
 Date creation   : 22.10.2022
 
-Description     : <à compléter>
+Description     : Instruction des méthodes pour le déroulement du jeu.
 
-Remarque(s)     : <à compléter>
+Remarque(s)     : Les vérifications se font depuis la position du dernier coup.
 
 Compilateur     : Mingw-w64 g++ 11.2.0
 -----------------------------------------------------------------------------------
@@ -16,7 +16,28 @@ Compilateur     : Mingw-w64 g++ 11.2.0
 #include "Puissance4.h"
 using namespace std;
 
+/*
+ * Instruction à chaque tour. Met la piece suivant le joueur.
+ * */
+vector<vector<int>> jouer(vector<vector<int>> &tableau, int joueur, int &ligne,
+                          int colonne, bool& erreur) {
 
+    const int TAILLE_LIGNE = (int) tableau.size();
+    for (ligne = TAILLE_LIGNE - 1; ligne >= 0;) {
+        if (tableau.at(ligne).at(colonne) == 0) {
+            tableau.at(ligne).at(colonne) = joueur;
+            return tableau;
+        } else {
+            ligne--;
+        }
+    }
+    erreur = true;
+    return tableau;
+}
+
+/*
+ * Fonction déterminant si un joueur à gagné.
+ * */
 bool joueurAGagne(const vector<vector<int>> &tableau, int &joueur, int ligne,
                   int colonne, int nombreCoup, bool &erreur) {
 
@@ -26,34 +47,57 @@ bool joueurAGagne(const vector<vector<int>> &tableau, int &joueur, int ligne,
            << "autre colonne svp." << endl;
       return false;
    } else {
-      if (nombreCoup >= 7) {
-         if (verfication(tableau, ligne, colonne)) {
+      if (nombreCoup >= 6) { //pas de gagnant avant 7ème tour
+
+          const int TAILLE_COLONNE = (int) tableau.at(0).size();
+          const int TAILLE_LIGNE = (int) tableau.size();
+
+          //calcul de décalages pour déterminer les positions des pièces pour l'allignement suivant la position de dernier coup.
+          int decalageGauche = colonne > 3 ? 3 : colonne;
+          int debutColonne = colonne - decalageGauche;
+
+          int decalageDroite = TAILLE_COLONNE - colonne > 3 ? 3 :
+                               TAILLE_COLONNE - 1 - colonne;
+          int finColonne = colonne + decalageDroite;
+
+          int decalageHaut = ligne > 3 ? 3 : ligne;
+          int debutLigne = ligne - decalageHaut;
+
+          int decalageBas = TAILLE_LIGNE - ligne > 3 ? 3 :
+                            TAILLE_LIGNE - 1 - ligne;
+          int finLigne = ligne + decalageBas;
+
+          //vérification pour chaque cas
+          if (verifHorizontal(debutColonne, finColonne, tableau, ligne, colonne)) {
+              return true;
+
+          } else if (verifVertical(debutLigne, finLigne, tableau, ligne, colonne)) {
+              return true;
+
+          } else if (verifDiagonaleDroite(decalageDroite, decalageGauche,
+                                          decalageHaut, decalageBas,
+                                          tableau, ligne, colonne)) {
+              return true;
+
+          } else if (verifDiagonaleGauche(decalageDroite, decalageGauche,
+                                          decalageHaut, decalageBas,
+                                          tableau, ligne, colonne)) {
+              return true;
+
+          } else {
+              return false;
+          }
+/*         if (verfication(tableau, ligne, colonne)) {
             return true;
-         }
+         }*/
       }
       joueur = joueur % 2 + 1;
    }
    return false;
 }
 
-vector<vector<int>> jouer(vector<vector<int>> &tableau, int joueur, int &ligne,
-                          int colonne, bool& erreur) {
 
-   const int TAILLE_LIGNE = (int) tableau.size();
-   for (ligne = TAILLE_LIGNE - 1; ligne >= 0;) {
-      if (tableau.at(ligne).at(colonne) == 0) {
-         tableau.at(ligne).at(colonne) = joueur;
-         return tableau;
-      } else {
-         ligne--;
-      }
-   }
-   erreur = true;
-   return tableau;
-}
-
-
-bool verfication(const vector<vector<int>> &tableau, int ligne, int colonne) {
+// bool verfication(const vector<vector<int>> &tableau, int ligne, int colonne) {
 
    /*
    // Verification Horizontal
@@ -171,8 +215,7 @@ bool verfication(const vector<vector<int>> &tableau, int ligne, int colonne) {
    }
    return false;
     */
-
-   const int TAILLE_COLONNE = (int) tableau.at(0).size();
+   /*const int TAILLE_COLONNE = (int) tableau.at(0).size();
    const int TAILLE_LIGNE = (int) tableau.size();
 
    int decalageGauche = colonne > 3 ? 3 : colonne;
@@ -201,13 +244,14 @@ bool verfication(const vector<vector<int>> &tableau, int ligne, int colonne) {
                                          decalageHaut, decalageBas,
                                          tableau, ligne, colonne);
    return verif;
-}
+} */
 
+// Verification diagonale droite "/"
 bool verifDiagonaleDroite(int decalageDroite, int decalageGauche,
                           int decalageHaut, int decalageBas,
                           const vector<vector<int>> &tableau, int ligne,
                           int colonne) {
-   // Verification diagonale droite "/"
+
    int compteurVictoire = 0;
    if (decalageBas < decalageGauche) {
       decalageGauche = decalageBas;
@@ -242,11 +286,12 @@ bool verifDiagonaleDroite(int decalageDroite, int decalageGauche,
    return false;
 }
 
+// Verifier Diagonale gauche "\"
 bool verifDiagonaleGauche(int decalageDroite, int decalageGauche,
                           int decalageHaut, int decalageBas,
                           const vector<vector<int>> &tableau, int ligne,
                           int colonne) {
-   // Verifier Diagonale gauche "\"
+
    int compteurVictoire = 0;
    if (decalageBas < decalageDroite) {
       decalageDroite = decalageBas;
@@ -281,10 +326,11 @@ bool verifDiagonaleGauche(int decalageDroite, int decalageGauche,
    return false;
 }
 
+// Verification Horizontal
 bool verifHorizontal(int debutColonne, int finColonne,
                      const vector<vector<int>> &tableau,
                      int ligne, int colonne) {
-   // Verification Horizontal
+
    int compteurVictoire = 0;
 
    for (int col = debutColonne; col <= finColonne; ++col) {
@@ -301,10 +347,11 @@ bool verifHorizontal(int debutColonne, int finColonne,
    return false;
 }
 
+// Verification vertical
 bool verifVertical(int debutLigne, int finLigne,
                    const vector<vector<int>> &tableau,
                    int ligne, int colonne) {
-   // Verification vertical
+
    int compteurVictoire = 0;
 
    for (int l = debutLigne; l <= finLigne; ++l) {

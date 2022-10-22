@@ -4,9 +4,11 @@ Nom du fichier  : Puissance4.h
 Auteur(s)       : Chloé Salamin, Guilherme Pinto
 Date creation   : 22.10.2022
 
-Description     : <à compléter>
+Description     : Contient les méthodes pour le déroulement du jeu.
+                    La méthode pour déterminer le gagnant et
+                    les méthodes de vérification si un joueur à gagné pour chaque cas.
 
-Remarque(s)     : <à compléter>
+Remarque(s)     :
 
 Compilateur     : Mingw-w64 g++ 11.2.0
 -----------------------------------------------------------------------------------

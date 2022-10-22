@@ -4,9 +4,11 @@ Nom du fichier  : affichagePuissance4.h
 Auteur(s)       : Chloé Salamin, Guilherme Pinto
 Date creation   : 22.10.2022
 
-Description     : <à compléter>
+Description     : Contient la méthode qui affiche le plateau de jeu
+                    et la méthode pour effacer la console à chaque tour.
 
-Remarque(s)     : <à compléter>
+Remarque(s)     : La méthode pour effacer la console fonctionne
+                    sur console windows (console extern) et non sur le terminal.
 
 Compilateur     : Mingw-w64 g++ 11.2.0
 -----------------------------------------------------------------------------------

@@ -4,9 +4,9 @@ Nom du fichier  : affichagePuissance4.cpp
 Auteur(s)       : Chloé Salamin, Guilherme Pinto
 Date creation   : 22.10.2022
 
-Description     : <à compléter>
+Description     : Instructions des méthodes d'affichage
 
-Remarque(s)     : <à compléter>
+Remarque(s)     :
 
 Compilateur     : Mingw-w64 g++ 11.2.0
 -----------------------------------------------------------------------------------
@@ -19,6 +19,9 @@ Compilateur     : Mingw-w64 g++ 11.2.0
 
 using namespace std;
 
+/*
+ * fonction pour afficher un tableau 2D en utilisant les vecteurs.
+ */
 void afficherTableau(const vector<vector<int>> &tableau) {
 
    const int TAILLE_COLONNE = (int) tableau.at(0).size();
@@ -39,6 +42,9 @@ void afficherTableau(const vector<vector<int>> &tableau) {
    cout << endl;
 }
 
+/*
+ * fonction pour effacer la console suivant le système.
+ */
 void effacerConsole() {
 #ifdef _WIN32
    system("cls");

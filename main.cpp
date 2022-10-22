@@ -4,7 +4,7 @@ Nom du fichier  : main.cpp
 Auteur(s)       : Chloé Salamin, Guilherme Pinto
 Date creation   : 18.10.2022
 
-Description     : <à compléter>
+Description     : Petite implémentation du jeu puissance 4 en c++.
 
 Remarque(s)     : À exécuter sur la console Windows. (Problème avec le clear)
 
