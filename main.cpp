@@ -70,7 +70,7 @@ int main() {
       } while (!saisieOK);
       cout << endl;
       colonne--;
-      jouer(tableau, joueur, ligne, colonne, TAILLE_LIGNE, erreur);
+      jouer(tableau, joueur, ligne, colonne, erreur);
       afficherTableau(tableau);
       gagnant = joueurAGagne(tableau, joueur, ligne, colonne, nombreCoup, erreur);
       if (gagnant) {

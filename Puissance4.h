@@ -19,8 +19,27 @@ bool joueurAGagne(const std::vector<std::vector<int>> &tableau, int &joueur,
 
 std::vector<std::vector<int>> jouer(std::vector<std::vector<int>> &tableau,
                                     int joueur, int &ligne,
-                                    int colonne, const int TAILLE_LIGNE,
-                                    bool &erreur);
+                                    int colonne, bool &erreur);
 
-bool verfication(std::vector<std::vector<int>> tableau, int ligne, int colonne);
+bool verfication(const std::vector<std::vector<int>> &tableau, int ligne,
+                 int colonne);
+
+bool verifDiagonaleDroite(int decalageDroite, int decalageGauche,
+                          int decalageHaut, int decalageBas,
+                          const std::vector<std::vector<int>> &tableau, int ligne,
+                          int colonne);
+
+bool verifDiagonaleGauche(int decalageDroite, int decalageGauche,
+                          int decalageHaut, int decalageBas,
+                          const std::vector<std::vector<int>> &tableau, int ligne,
+                          int colonne);
+
+bool verifHorizontal(int debutColonne, int finColonne,
+                     const std::vector<std::vector<int>> &tableau,
+                     int ligne, int colonne);
+
+bool verifVertical(int debutLigne, int finLigne,
+                   const std::vector<std::vector<int>> &tableau,
+                   int ligne, int colonne);
+
 #endif //MANDELBROT_PUISSANCE4_H
