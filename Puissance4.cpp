@@ -18,9 +18,12 @@ using namespace std;
 
 
 bool joueurAGagne(const vector<vector<int>> &tableau, int &joueur, int ligne,
-                  int colonne, int nombreCoup, bool erreur) {
+                  int colonne, int nombreCoup, bool &erreur) {
 
    if (erreur) {
+      erreur = false;
+      cout << endl << "Erreur cette colonne est deja complete. Rejouer dans une "
+           << "autre colonne svp." << endl;
       return false;
    } else {
       if (nombreCoup >= 7) {
@@ -45,8 +48,6 @@ vector<vector<int>> jouer(vector<vector<int>> &tableau, int joueur, int &ligne,
       }
    }
    erreur = true;
-   cout << endl << "Erreur cette colonne est deja complete. Rejouer dans une autre"
-                   " colonne svp.";
    return tableau;
 }
 

@@ -16,4 +16,6 @@ Compilateur     : Mingw-w64 g++ 11.2.0
 
 void afficherTableau(const std::vector<std::vector<int>> &tableau);
 
+void effacerConsole();
+
 #endif //MANDELBROT_AFFICHAGEPUISSANCE4_H

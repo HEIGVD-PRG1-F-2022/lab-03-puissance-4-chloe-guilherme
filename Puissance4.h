@@ -15,7 +15,7 @@ Compilateur     : Mingw-w64 g++ 11.2.0
 #define MANDELBROT_PUISSANCE4_H
 
 bool joueurAGagne(const std::vector<std::vector<int>> &tableau, int &joueur,
-                  int ligne, int colonne, int nombreCoup, bool erreur);
+                  int ligne, int colonne, int nombreCoup, bool &erreur);
 
 std::vector<std::vector<int>> jouer(std::vector<std::vector<int>> &tableau,
                                     int joueur, int &ligne,

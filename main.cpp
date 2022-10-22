@@ -6,7 +6,7 @@ Date creation   : 18.10.2022
 
 Description     : <à compléter>
 
-Remarque(s)     : <à compléter>
+Remarque(s)     : À exécuter sur la console Windows. (Problème avec le clear)
 
 Compilateur     : Mingw-w64 g++ 11.2.0
 -----------------------------------------------------------------------------------
@@ -55,6 +55,7 @@ int main() {
    for (nombreCoup = 0; nombreCoup < TAILLE_LIGNE * TAILLE_COLONNE; ++nombreCoup) {
 
       do {
+
          cout << "Joueur " << joueur << endl
               << "Veuillez entrer le numero de la colonne dans laquelle "
               << "vous souhaitez jouer (1 - " << TAILLE_COLONNE << ") : ";
@@ -84,5 +85,6 @@ int main() {
       cout << "Match nul!" << endl;
    }
 
+   system("pause");
    return EXIT_SUCCESS;
 }
