@@ -15,16 +15,19 @@ Compilateur     : Mingw-w64 g++ 11.2.0
 #include <iostream>
 #include <vector>
 #include <limits>
+#include <iomanip>
 
 using namespace std;
 
 void afficherTableau(const vector<vector<int>>& tableau) {
    for (const vector<int>& tableau1D: tableau) {
+      cout << "|";
       for (int val: tableau1D) {
-         cout << "(" << val << ")";
+         cout << setw(2) << val << setw(2) << "|";
       }
       cout << endl;
    }
+   cout << endl;
 }
 
 vector<vector<int>> jouer(vector<vector<int>> &tableau, int joueur, int &ligne,
@@ -69,6 +72,7 @@ bool verfication(vector<vector<int>> tableau, int ligne, int colonne) {
          compteurVictoire = 0;
       }
    }
+   compteurVictoire = 0;
 
 
    // Verification vertical
@@ -91,6 +95,7 @@ bool verfication(vector<vector<int>> tableau, int ligne, int colonne) {
          compteurVictoire = 0;
       }
    }
+   compteurVictoire = 0;
 
 
    // Verification diagonale droite "/"
@@ -108,7 +113,7 @@ bool verfication(vector<vector<int>> tableau, int ligne, int colonne) {
    finLigne = ligne + decalageBas;
    debutColonne = colonne - decalageGauche;
    finColonne = colonne + decalageDroite;
-   for (int l = debutLigne; l <= finLigne; --debutColonne,
+   for (int l = debutLigne; l <= finLigne; --finColonne,
       ++l) {
       for (int col = finColonne; col >= debutColonne && col > finColonne - 1;
            --col) {
@@ -123,6 +128,7 @@ bool verfication(vector<vector<int>> tableau, int ligne, int colonne) {
          }
       }
    }
+   compteurVictoire = 0;
 
 
    // Verifier Diagonale gauche "\"
