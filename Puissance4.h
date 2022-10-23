@@ -5,8 +5,8 @@ Auteur(s)       : Chloé Salamin, Guilherme Pinto
 Date creation   : 22.10.2022
 
 Description     : Contient les méthodes pour le déroulement du jeu.
-                    La méthode pour déterminer le gagnant et
-                    les méthodes de vérification si un joueur à gagné pour chaque cas.
+                  La méthode pour déterminer le gagnant et
+                  les méthodes de vérification si un joueur à gagné pour chaque cas.
 
 Remarque(s)     :
 
@@ -16,15 +16,13 @@ Compilateur     : Mingw-w64 g++ 11.2.0
 #ifndef MANDELBROT_PUISSANCE4_H
 #define MANDELBROT_PUISSANCE4_H
 
-bool joueurAGagne(const std::vector<std::vector<int>> &tableau, int &joueur,
-                  int ligne, int colonne, int nombreCoup, bool &erreur);
-
 std::vector<std::vector<int>> jouer(std::vector<std::vector<int>> &tableau,
                                     int joueur, int &ligne,
                                     int colonne, bool &erreur);
 
-bool verfication(const std::vector<std::vector<int>> &tableau, int ligne,
-                 int colonne);
+bool joueurAGagne(const std::vector<std::vector<int>> &tableau, int &joueur,
+                  int ligne, int colonne, int nombreCoup, bool &erreur);
+
 
 bool verifDiagonaleDroite(int decalageDroite, int decalageGauche,
                           int decalageHaut, int decalageBas,

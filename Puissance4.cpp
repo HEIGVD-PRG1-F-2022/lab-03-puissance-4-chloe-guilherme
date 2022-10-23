@@ -41,6 +41,7 @@ vector<vector<int>> jouer(vector<vector<int>> &tableau, int joueur, int &ligne,
 bool joueurAGagne(const vector<vector<int>> &tableau, int &joueur, int ligne,
                   int colonne, int nombreCoup, bool &erreur) {
 
+   bool aGagne = false;
    if (erreur) {
       erreur = false;
       cout << endl << "Erreur cette colonne est deja complete. Rejouer dans une "
@@ -52,7 +53,8 @@ bool joueurAGagne(const vector<vector<int>> &tableau, int &joueur, int ligne,
           const int TAILLE_COLONNE = (int) tableau.at(0).size();
           const int TAILLE_LIGNE = (int) tableau.size();
 
-          //calcul de décalages pour déterminer les positions des pièces pour l'allignement suivant la position de dernier coup.
+          // calcul de décalages pour déterminer les positions des pièces pour
+          // l'allignement suivant la position de dernier coup.
           int decalageGauche = colonne > 3 ? 3 : colonne;
           int debutColonne = colonne - decalageGauche;
 
@@ -68,6 +70,20 @@ bool joueurAGagne(const vector<vector<int>> &tableau, int &joueur, int ligne,
           int finLigne = ligne + decalageBas;
 
           //vérification pour chaque cas
+         aGagne = verifHorizontal(debutColonne, finColonne, tableau, ligne, colonne);
+
+         aGagne = aGagne || verifVertical(debutLigne, finLigne, tableau, ligne,
+                                          colonne);
+
+         aGagne = aGagne || verifDiagonaleDroite(decalageDroite, decalageGauche,
+                                                 decalageHaut, decalageBas,
+                                                 tableau, ligne, colonne);
+
+         aGagne = aGagne || verifDiagonaleGauche(decalageDroite, decalageGauche,
+                                                 decalageHaut, decalageBas,
+                                                 tableau, ligne, colonne);
+
+         /*
           if (verifHorizontal(debutColonne, finColonne, tableau, ligne, colonne)) {
               return true;
 
@@ -87,164 +103,12 @@ bool joueurAGagne(const vector<vector<int>> &tableau, int &joueur, int ligne,
           } else {
               return false;
           }
-/*         if (verfication(tableau, ligne, colonne)) {
-            return true;
-         }*/
+          */
       }
-      joueur = joueur % 2 + 1;
+      joueur = aGagne ? joueur : joueur % 2 + 1;
    }
-   return false;
+   return aGagne;
 }
-
-
-// bool verfication(const vector<vector<int>> &tableau, int ligne, int colonne) {
-
-   /*
-   // Verification Horizontal
-   const int TAILLE_COLONNE = (int) tableau.at(0).size();
-   int compteurVictoire = 0;
-
-   int decalageGauche = colonne > 3 ? 3 : colonne;
-   int debutColonne = colonne - decalageGauche;
-
-   int decalageDroite = TAILLE_COLONNE - colonne > 3 ? 3 :
-                        TAILLE_COLONNE - 1 - colonne;
-   int finColonne = colonne + decalageDroite;
-
-   for (int col = debutColonne; col <= finColonne; ++col) {
-      if (tableau.at(ligne).at(colonne) ==
-          tableau.at(ligne).at(col)) {
-         compteurVictoire++;
-         if (compteurVictoire > 3) {
-            return true;
-         }
-      } else {
-         compteurVictoire = 0;
-      }
-   }
-   compteurVictoire = 0;
-
-
-   // Verification vertical
-   const int TAILLE_LIGNE = (int) tableau.size();
-
-   int decalageHaut = ligne > 3 ? 3 : ligne;
-   int debutLigne = ligne - decalageHaut;
-
-   int decalageBas = TAILLE_LIGNE - ligne > 3 ? 3 :
-                     TAILLE_LIGNE - 1 - ligne;
-   int finLigne = ligne + decalageBas;
-   for (int l = debutLigne; l <= finLigne; ++l) {
-      if (tableau.at(ligne).at(colonne) ==
-          tableau.at(l).at(colonne)) {
-         compteurVictoire++;
-         if (compteurVictoire > 3) {
-            return true;
-         }
-      } else {
-         compteurVictoire = 0;
-      }
-   }
-   compteurVictoire = 0;
-
-
-   // Verification diagonale droite "/"
-   if (decalageBas < decalageGauche) {
-      decalageGauche = decalageBas;
-   } else {
-      decalageBas = decalageGauche;
-   }
-   if (decalageHaut < decalageDroite) {
-      decalageDroite = decalageHaut;
-   } else {
-      decalageHaut = decalageDroite;
-
-   }
-   debutLigne = ligne - decalageHaut;
-   finLigne = ligne + decalageBas;
-   debutColonne = colonne - decalageGauche;
-   finColonne = colonne + decalageDroite;
-   for (int l = debutLigne; l <= finLigne; --finColonne,
-      ++l) {
-      for (int col = finColonne; col >= debutColonne && col > finColonne - 1;
-           --col) {
-         if (tableau.at(ligne).at(colonne) ==
-             tableau.at(l).at(col)) {
-            compteurVictoire++;
-            if (compteurVictoire > 3) {
-               return true;
-            }
-         } else {
-            compteurVictoire = 0;
-         }
-      }
-   }
-   compteurVictoire = 0;
-
-
-   // Verifier Diagonale gauche "\"
-   if (decalageBas < decalageDroite) {
-      decalageDroite = decalageBas;
-   } else {
-      decalageBas = decalageDroite;
-   }
-   if (decalageHaut < decalageGauche) {
-      decalageGauche = decalageHaut;
-   } else {
-      decalageHaut = decalageGauche;
-   }
-
-   debutLigne = ligne - decalageHaut;
-   finLigne = ligne + decalageBas;
-   debutColonne = colonne - decalageGauche;
-   finColonne = colonne + decalageDroite;
-
-   for (int l = debutLigne; l <= finLigne; ++debutColonne, ++l) {
-      for (int col = debutColonne; col <= finColonne && col < debutColonne + 1;
-           ++col) {
-         if (tableau.at(ligne).at(colonne) ==
-             tableau.at(l).at(col)) {
-            compteurVictoire++;
-            if (compteurVictoire > 3) {
-               return true;
-            }
-         } else {
-            compteurVictoire = 0;
-         }
-      }
-   }
-   return false;
-    */
-   /*const int TAILLE_COLONNE = (int) tableau.at(0).size();
-   const int TAILLE_LIGNE = (int) tableau.size();
-
-   int decalageGauche = colonne > 3 ? 3 : colonne;
-   int debutColonne = colonne - decalageGauche;
-
-   int decalageDroite = TAILLE_COLONNE - colonne > 3 ? 3 :
-                        TAILLE_COLONNE - 1 - colonne;
-   int finColonne = colonne + decalageDroite;
-
-   int decalageHaut = ligne > 3 ? 3 : ligne;
-   int debutLigne = ligne - decalageHaut;
-
-   int decalageBas = TAILLE_LIGNE - ligne > 3 ? 3 :
-                     TAILLE_LIGNE - 1 - ligne;
-   int finLigne = ligne + decalageBas;
-
-   bool verif = verifHorizontal(debutColonne, finColonne, tableau, ligne, colonne);
-
-   verif = verif || verifVertical(debutLigne, finLigne, tableau, ligne, colonne);
-
-   verif = verif || verifDiagonaleDroite(decalageDroite, decalageGauche,
-                                         decalageHaut, decalageBas,
-                                         tableau, ligne, colonne);
-
-   verif = verif || verifDiagonaleGauche(decalageDroite, decalageGauche,
-                                         decalageHaut, decalageBas,
-                                         tableau, ligne, colonne);
-   return verif;
-} */
 
 // Verification diagonale droite "/"
 bool verifDiagonaleDroite(int decalageDroite, int decalageGauche,
@@ -253,6 +117,10 @@ bool verifDiagonaleDroite(int decalageDroite, int decalageGauche,
                           int colonne) {
 
    int compteurVictoire = 0;
+
+   // Pour la diagonale droite la limite du haut est liée à celle de droite
+   // et celle du bas avec celle de gauche
+   // Si on monte d'une case on doit pouvoir aller à droite d'une case également.
    if (decalageBas < decalageGauche) {
       decalageGauche = decalageBas;
    } else {
@@ -268,6 +136,8 @@ bool verifDiagonaleDroite(int decalageDroite, int decalageGauche,
    int finLigne = ligne + decalageBas;
    int debutColonne = colonne - decalageGauche;
    int finColonne = colonne + decalageDroite;
+
+   // On commence la verification toujours depuis le haut du tableau vers le bas.
    for (int l = debutLigne; l <= finLigne; --finColonne,
       ++l) {
       for (int col = finColonne; col >= debutColonne && col > finColonne - 1;
@@ -293,6 +163,10 @@ bool verifDiagonaleGauche(int decalageDroite, int decalageGauche,
                           int colonne) {
 
    int compteurVictoire = 0;
+
+   // Pour la diagonale gauche la limite du haut est liée à celle de gauche
+   // et celle du bas avec celle de droite
+   // Si on monte d'une case on doit pouvoir aller à gauche d'une case également.
    if (decalageBas < decalageDroite) {
       decalageDroite = decalageBas;
    } else {
@@ -304,11 +178,13 @@ bool verifDiagonaleGauche(int decalageDroite, int decalageGauche,
       decalageHaut = decalageGauche;
    }
 
+   // Calcul des limites du tableau de verification
    int debutLigne = ligne - decalageHaut;
    int finLigne = ligne + decalageBas;
    int debutColonne = colonne - decalageGauche;
    int finColonne = colonne + decalageDroite;
 
+   // On commence la verification toujours depuis le haut du tableau vers le bas.
    for (int l = debutLigne; l <= finLigne; ++debutColonne, ++l) {
       for (int col = debutColonne; col <= finColonne && col < debutColonne + 1;
            ++col) {

@@ -6,7 +6,8 @@ Date creation   : 18.10.2022
 
 Description     : Petite implémentation du jeu puissance 4 en c++.
 
-Remarque(s)     : À exécuter sur la console Windows. (Problème avec le clear)
+Remarque(s)     : À exécuter sur la console Windows. (Problème avec le clear dans
+                  la console CLion)
 
 Compilateur     : Mingw-w64 g++ 11.2.0
 -----------------------------------------------------------------------------------
@@ -55,9 +56,25 @@ int main() {
          << "le joueur 1 et un 2 pour le joueur 2. Les colonnes jouables sont 7 "
          << " de 1 a 7." << endl << endl;
 
-   const int TAILLE_LIGNE = 6, TAILLE_COLONNE = 7;
+
    int ligne, colonne, nombreCoup, joueur = 1;
-   bool erreur = false, saisieOK, gagnant = false;
+   bool erreur = false, saisieOK, aGagne = false;
+
+   //const int TAILLE_LIGNE = 6, TAILLE_COLONNE = 7;
+   int TAILLE_LIGNE, TAILLE_COLONNE;
+
+   do {
+
+      cout << "Introduire la taille du tableau, le Nombre de Lignes d'abord puis "
+              "Nombre de colonne (Exemple: 6 7) :";
+      if (!(saisieOK = cin >> TAILLE_LIGNE >> TAILLE_COLONNE &&
+                       TAILLE_LIGNE >= 4 && TAILLE_COLONNE >= 4)) {
+         cin.clear();
+         cout << "La taille du tableau est trop petite il n'est pas possible "
+                 "d'aligner 4 pions. La taille minimal est 4x4." << endl;
+      }
+      cin.ignore(numeric_limits<streamsize>::max(), '\n');
+   } while (!saisieOK);
 
    vector<vector<int>> tableau(TAILLE_LIGNE, vector<int>(TAILLE_COLONNE, 0));
 
@@ -81,14 +98,13 @@ int main() {
       colonne--;
       jouer(tableau, joueur, ligne, colonne, erreur);
       afficherTableau(tableau);
-      gagnant = joueurAGagne(tableau, joueur, ligne, colonne, nombreCoup, erreur);
-      if (gagnant) {
-         //gagnant = true;
+      aGagne = joueurAGagne(tableau, joueur, ligne, colonne, nombreCoup, erreur);
+      if (aGagne) {
          break;
       }
    }
 
-   if (gagnant) {
+   if (aGagne) {
       cout << "Bravo! Joueur " << joueur << " a gagne!" << endl;
    } else {
       cout << "Match nul!" << endl;
