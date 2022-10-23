@@ -14,25 +14,26 @@ Compilateur     : Mingw-w64 g++ 11.2.0
 #include <iostream>
 #include <vector>
 #include "Puissance4.h"
+
 using namespace std;
 
 /*
  * Instruction à chaque tour. Met la piece suivant le joueur.
  * */
 vector<vector<int>> jouer(vector<vector<int>> &tableau, int joueur, int &ligne,
-                          int colonne, bool& erreur) {
+                          int colonne, bool &erreur) {
 
-    const int TAILLE_LIGNE = (int) tableau.size();
-    for (ligne = TAILLE_LIGNE - 1; ligne >= 0;) {
-        if (tableau.at(ligne).at(colonne) == 0) {
-            tableau.at(ligne).at(colonne) = joueur;
-            return tableau;
-        } else {
-            ligne--;
-        }
-    }
-    erreur = true;
-    return tableau;
+   const int TAILLE_LIGNE = (int) tableau.size();
+   for (ligne = TAILLE_LIGNE - 1; ligne >= 0;) {
+      if (tableau.at(ligne).at(colonne) == 0) {
+         tableau.at(ligne).at(colonne) = joueur;
+         return tableau;
+      } else {
+         ligne--;
+      }
+   }
+   erreur = true;
+   return tableau;
 }
 
 /*
@@ -50,26 +51,26 @@ bool joueurAGagne(const vector<vector<int>> &tableau, int &joueur, int ligne,
    } else {
       if (nombreCoup >= 6) { //pas de gagnant avant 7ème tour
 
-          const int TAILLE_COLONNE = (int) tableau.at(0).size();
-          const int TAILLE_LIGNE = (int) tableau.size();
+         const int TAILLE_COLONNE = (int) tableau.at(0).size();
+         const int TAILLE_LIGNE = (int) tableau.size();
 
-          // calcul de décalages pour déterminer les positions des pièces pour
-          // l'allignement suivant la position de dernier coup.
-          int decalageGauche = colonne > 3 ? 3 : colonne;
-          int debutColonne = colonne - decalageGauche;
+         // calcul de décalages pour déterminer les positions des pièces pour
+         // l'allignement suivant la position de dernier coup.
+         int decalageGauche = colonne > 3 ? 3 : colonne;
+         int debutColonne = colonne - decalageGauche;
 
-          int decalageDroite = TAILLE_COLONNE - colonne > 3 ? 3 :
-                               TAILLE_COLONNE - 1 - colonne;
-          int finColonne = colonne + decalageDroite;
+         int decalageDroite = TAILLE_COLONNE - colonne > 3 ? 3 :
+                              TAILLE_COLONNE - 1 - colonne;
+         int finColonne = colonne + decalageDroite;
 
-          int decalageHaut = ligne > 3 ? 3 : ligne;
-          int debutLigne = ligne - decalageHaut;
+         int decalageHaut = ligne > 3 ? 3 : ligne;
+         int debutLigne = ligne - decalageHaut;
 
-          int decalageBas = TAILLE_LIGNE - ligne > 3 ? 3 :
-                            TAILLE_LIGNE - 1 - ligne;
-          int finLigne = ligne + decalageBas;
+         int decalageBas = TAILLE_LIGNE - ligne > 3 ? 3 :
+                           TAILLE_LIGNE - 1 - ligne;
+         int finLigne = ligne + decalageBas;
 
-          //vérification pour chaque cas
+         //vérification pour chaque cas
          aGagne = verifHorizontal(debutColonne, finColonne, tableau, ligne, colonne);
 
          aGagne = aGagne || verifVertical(debutLigne, finLigne, tableau, ligne,

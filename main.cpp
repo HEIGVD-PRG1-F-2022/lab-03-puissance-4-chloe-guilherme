@@ -65,8 +65,8 @@ int main() {
 
    do {
 
-      cout << "Premierement, veuillez introduire la taille du tableau, le Nombre de Lignes d'abord puis "
-              "Nombre de colonne (Exemple: 6 7) :";
+      cout << "Premierement, veuillez introduire la taille du tableau, le Nombre de "
+              "Lignes d'abord puis Nombre de colonne (Exemple: 6 7) :";
       if (!(saisieOK = cin >> TAILLE_LIGNE >> TAILLE_COLONNE &&
                        TAILLE_LIGNE >= 4 && TAILLE_COLONNE >= 4)) {
          cin.clear();
