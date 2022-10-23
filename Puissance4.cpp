@@ -82,28 +82,6 @@ bool joueurAGagne(const vector<vector<int>> &tableau, int &joueur, int ligne,
          aGagne = aGagne || verifDiagonaleGauche(decalageDroite, decalageGauche,
                                                  decalageHaut, decalageBas,
                                                  tableau, ligne, colonne);
-
-         /*
-          if (verifHorizontal(debutColonne, finColonne, tableau, ligne, colonne)) {
-              return true;
-
-          } else if (verifVertical(debutLigne, finLigne, tableau, ligne, colonne)) {
-              return true;
-
-          } else if (verifDiagonaleDroite(decalageDroite, decalageGauche,
-                                          decalageHaut, decalageBas,
-                                          tableau, ligne, colonne)) {
-              return true;
-
-          } else if (verifDiagonaleGauche(decalageDroite, decalageGauche,
-                                          decalageHaut, decalageBas,
-                                          tableau, ligne, colonne)) {
-              return true;
-
-          } else {
-              return false;
-          }
-          */
       }
       joueur = aGagne ? joueur : joueur % 2 + 1;
    }
